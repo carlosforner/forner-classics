@@ -1,0 +1,7 @@
+Placeholder para la carpeta de imágenes de Forner Classics.
+Guarde aquí los 4 archivos de los vehículos con exactamente estos nombres:
+
+- chevrolet-1930.jpg       → Chevrolet International AC 1930
+- renault-caravelle-1962.jpg → Renault Caravelle Rojo 1962
+- seat-850-1968.jpg        → SEAT 850 4 puertas 1968
+- renault-4-1982.jpg       → Renault 4 Amarillo 1982
