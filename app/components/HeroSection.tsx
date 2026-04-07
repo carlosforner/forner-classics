@@ -99,6 +99,7 @@ export default function HeroSection() {
             marginBottom: '1.5rem',
           }}
         >
+          <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', borderWidth: 0 }}>Alquiler de Coches Clásicos en Gandía y Valencia. </span>
           Donde el tiempo{' '}
           <span style={{
             fontStyle: 'italic',

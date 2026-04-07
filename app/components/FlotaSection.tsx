@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { ArrowRight, Check } from 'lucide-react';
 
 const vehicles = [
@@ -137,7 +138,7 @@ export default function FlotaSection() {
             color: '#E8D5A3',
             marginBottom: '1rem',
           }}>
-            Nuestra Flota
+            Nuestra Flota de Vehículos Históricos
           </h2>
           <p style={{
             fontFamily: 'DM Sans, sans-serif',
@@ -192,23 +193,22 @@ export default function FlotaSection() {
                     background: 'var(--surface-low)',
                   }}
                 >
-                  <img
+                  <Image
                     src={vehicle.image}
                     alt={vehicle.imageAlt}
-                    loading="lazy"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     style={{
-                      width: '100%',
-                      height: '100%',
                       objectFit: 'cover',
                       objectPosition: 'center',
                       transition: 'transform 0.7s ease',
                       display: 'block',
                     }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.04)';
+                      (e.currentTarget as HTMLElement).style.transform = 'scale(1.04)';
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
+                      (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
                     }}
                   />
 

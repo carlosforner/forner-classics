@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Heart, Camera, Compass, Check } from 'lucide-react';
 
 const UNAVAILABLE_VEHICLES = ['SEAT 850 1968', 'Renault 4 1982'];
@@ -108,7 +109,7 @@ export default function ServiciosSection() {
             color: '#E8D5A3',
             marginBottom: '1rem',
           }}>
-            Nuestros Servicios
+            Servicios de Alquiler Exclusivos
           </h2>
           <p style={{ color: '#A09070', maxWidth: '520px', margin: '0 auto', marginBottom: '2.5rem' }}>
             Cada ocasión merece un marco extraordinario. Ofrecemos experiencias
@@ -166,13 +167,14 @@ export default function ServiciosSection() {
                     aspectRatio: '16/7',
                     overflow: 'hidden',
                   }}>
-                    <img
+                    <Image
                       src={service.image}
                       alt={service.imageAlt}
-                      loading="lazy"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s ease' }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.04)'; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)'; }}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      style={{ objectFit: 'cover', transition: 'transform 0.6s ease' }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.04)'; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
                     />
                     <div style={{
                       position: 'absolute',

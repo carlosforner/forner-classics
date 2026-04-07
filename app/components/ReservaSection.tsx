@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Check, Send, Loader2, Car, CalendarDays, ClipboardList, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
@@ -306,11 +307,11 @@ export default function ReservaSection() {
     };
 
     try {
+      let currentPrice = 'A consultar';
       // 1. Guardar reserva en Supabase (Bloquea fecha)
       if (selectedVehicle && selectedDate) {
         const isoDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
         // Buscar el precio basado en el tipo de evento
-        let currentPrice = 'A consultar';
         const eventLabel = eventTypes.find(e => e.value === formData.tipoEvento)?.label || '';
         
         // Mapeo simple de segmento -> tipo de tarifa
@@ -335,45 +336,48 @@ export default function ReservaSection() {
 
         if (supaError) {
           console.error("⛔ [DEBUG] Error de Supabase:", supaError);
-          // Opcional: throw new Error(`Supabase falló: ${supaError.message}`);
+        }
+
+        // 2. Enviar notificación por email usando Formspree
+        const endpoint = "https://formspree.io/f/xnjogglj";
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        
+        if (!res.ok) {
+          throw new Error(`Error HTTP: ${res.status}`);
+        }
+
+        // 3. Enviar email de confirmación automático al cliente (NUEVO)
+        try {
+          await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              nombre: formData.nombre,
+              email: formData.email,
+              telefono: formData.telefono,
+              vehiculo: selectedVehicle.name,
+              fecha: fechaStr,
+              fechaRaw: selectedDate.toISOString(),
+              segmento: formData.segmento,
+              precio: currentPrice,
+              mensaje: formData.notas
+            }),
+          });
+        } catch (emailErr) {
+          console.error("Error al disparar el email automático:", emailErr);
         }
       }
-
-      // 2. Enviar notificación por email usando Formspree
-      const endpoint = "https://formspree.io/f/xnjogglj";
-      
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      
-      if (!res.ok) {
-        throw new Error(`Error HTTP: ${res.status}`);
-      }
-      // 3. Enviar email de confirmación automático al cliente (NUEVO)
-      try {
-        await fetch('/api/send-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            nombre: formData.nombre,
-            email: formData.email,
-            vehiculo: selectedVehicle?.name || 'Seleccionado',
-            fecha: fechaStr
-          }),
-        });
-      } catch (emailErr) {
-        console.error("Error al disparar el email automático:", emailErr);
-        // No bloqueamos el flujo principal si el email falla
-      }
-      
     } catch (err) {
       console.error('Error al enviar el formulario:', err);
       setSubmitError(true);
       setSending(false);
       return;
     }
+
 
     setSending(false);
     setStep(3);
@@ -457,9 +461,9 @@ export default function ReservaSection() {
                   onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'var(--surface-card)'}
                 >
                   <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', background: '#0a0a0a' }}>
-                    <img src={v.image} alt={v.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
-                      onMouseEnter={e => (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.05)'}
-                      onMouseLeave={e => (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)'} />
+                    <Image src={v.image} alt={v.name} fill sizes="(max-width: 768px) 100vw, 300px" style={{ objectFit: 'cover', transition: 'transform 0.5s ease' }}
+                      onMouseEnter={e => (e.currentTarget as HTMLElement).style.transform = 'scale(1.05)'}
+                      onMouseLeave={e => (e.currentTarget as HTMLElement).style.transform = 'scale(1)'} />
                     <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 65%)' }} />
                     <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
                       <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#C9A84C', color: '#1A1200', padding: '0.2rem 0.6rem' }}>Disponible</span>
@@ -494,7 +498,7 @@ export default function ReservaSection() {
                 {vehicles.filter(v => !v.available).map(v => (
                   <div key={v.id} style={{ background: 'var(--surface-card)', padding: 0 }}>
                     <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', background: '#0a0a0a', filter: 'grayscale(0.7)' }}>
-                      <img src={v.image} alt={v.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <Image src={v.image} alt={v.name} fill sizes="(max-width: 768px) 100vw, 300px" style={{ objectFit: 'cover' }} />
                       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 65%)' }} />
                       <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
                         <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#333', color: '#888', padding: '0.2rem 0.6rem', border: '1px solid rgba(255,255,255,0.1)' }}>Próximamente</span>
