@@ -530,6 +530,141 @@ export default function Navbar() {
           padding: '2rem 1.25rem',
         }}>
           {navLinks.map((link) => {
+            if (link.label === 'La Flota') {
+              return (
+                <div key={link.href}>
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                      background: 'none',
+                      border: 'none',
+                      textAlign: 'left',
+                      color: '#E8D5A3',
+                      fontFamily: 'DM Sans, sans-serif',
+                      fontSize: '0.9rem',
+                      fontWeight: 400,
+                      letterSpacing: '0.15em',
+                      textTransform: 'uppercase',
+                      cursor: 'pointer',
+                      padding: '1rem 0',
+                      borderBottom: '1px solid rgba(77,70,55,0.2)',
+                    }}
+                  >
+                    <span>{link.label}</span>
+                    <span style={{ 
+                      fontSize: '0.6rem', 
+                      transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0)',
+                      transition: 'transform 0.3s ease',
+                      color: '#C9A84C'
+                    }}>▼</span>
+                  </button>
+                  {dropdownOpen && (
+                    <div style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                      {[
+                        { name: 'Chevrolet International (1930)', id: '#chevrolet-1930' },
+                        { name: 'Renault Caravelle (1962)', id: '#renault-caravelle-1962' },
+                        { name: 'SEAT 850 (1968)', id: '#seat-850-1968' },
+                        { name: 'Renault 4 (1982)', id: '#renault-4-1982' },
+                      ].map(opt => (
+                        <button
+                          key={opt.id}
+                          onClick={() => handleNavClick(opt.id)}
+                          style={{
+                            display: 'block',
+                            width: '100%',
+                            textAlign: 'left',
+                            background: 'none',
+                            border: 'none',
+                            padding: '0.875rem 1rem',
+                            color: '#A09070',
+                            fontFamily: 'DM Sans, sans-serif',
+                            fontSize: '0.75rem',
+                            letterSpacing: '0.05em',
+                            borderLeft: '1px solid rgba(201,168,76,0.2)',
+                            marginLeft: '0.5rem',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {opt.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            if (link.label === 'Servicios') {
+              return (
+                <div key={link.href}>
+                  <button
+                    onClick={() => setDropdownServiciosOpen(!dropdownServiciosOpen)}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                      background: 'none',
+                      border: 'none',
+                      textAlign: 'left',
+                      color: '#E8D5A3',
+                      fontFamily: 'DM Sans, sans-serif',
+                      fontSize: '0.9rem',
+                      fontWeight: 400,
+                      letterSpacing: '0.15em',
+                      textTransform: 'uppercase',
+                      cursor: 'pointer',
+                      padding: '1rem 0',
+                      borderBottom: '1px solid rgba(77,70,55,0.2)',
+                    }}
+                  >
+                    <span>{link.label}</span>
+                    <span style={{ 
+                      fontSize: '0.6rem', 
+                      transform: dropdownServiciosOpen ? 'rotate(180deg)' : 'rotate(0)',
+                      transition: 'transform 0.3s ease',
+                      color: '#C9A84C'
+                    }}>▼</span>
+                  </button>
+                  {dropdownServiciosOpen && (
+                    <div style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                      {[
+                        { name: 'Bodas & Celebraciones', id: '#servicio-bodas' },
+                        { name: 'Turismo & Experiencias', id: '#servicio-turismo' },
+                        { name: 'Rodajes & Fotografía', id: '#servicio-rodajes' },
+                      ].map(opt => (
+                        <button
+                          key={opt.id}
+                          onClick={() => handleNavClick(opt.id)}
+                          style={{
+                            display: 'block',
+                            width: '100%',
+                            textAlign: 'left',
+                            background: 'none',
+                            border: 'none',
+                            padding: '0.875rem 1rem',
+                            color: '#A09070',
+                            fontFamily: 'DM Sans, sans-serif',
+                            fontSize: '0.75rem',
+                            letterSpacing: '0.05em',
+                            borderLeft: '1px solid rgba(201,168,76,0.2)',
+                            marginLeft: '0.5rem',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {opt.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             if (link.label === 'Contacto') {
               return (
                 <div key={link.href}>

@@ -265,7 +265,7 @@ export default function FlotaSection() {
                       lineHeight: 1,
                       userSelect: 'none',
                       textShadow: '0 4px 12px rgba(0,0,0,0.4)',
-                    }}>
+                    }} className="vehicle-year">
                       {vehicle.year}
                     </span>
                     <span style={{
@@ -275,7 +275,7 @@ export default function FlotaSection() {
                       fontWeight: 500,
                       letterSpacing: '0.12em',
                       textShadow: '0 2px 4px rgba(0,0,0,0.8)',
-                    }}>
+                    }} className="vehicle-era-text">
                       {vehicle.era.toUpperCase()} · {vehicle.color} · {vehicle.pax}
                     </span>
                   </div>
