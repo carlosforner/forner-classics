@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 
 export default function HeroSection() {
@@ -27,16 +27,25 @@ export default function HeroSection() {
         overflow: 'hidden',
       }}
     >
-      {/* Background image with dark overlay */}
+      {/* Background image — Next.js optimized for LCP */}
+      <div style={{ position: 'absolute', inset: 0 }}>
+        <Image
+          src="/images/hero-principal.jpg.png"
+          alt="Forner Classics - Coches clásicos históricos en villa mediterránea"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center 70%' }}
+        />
+      </div>
+
+      {/* Dark gradient overlay */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        backgroundImage: `
-          linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.85) 100%),
-          url('/images/chevrolet.webp.png')
-        `,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center 30%',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.8) 100%)',
+        zIndex: 1,
       }} />
 
       {/* Art Déco geometric border overlay */}
@@ -147,31 +156,33 @@ export default function HeroSection() {
           borderTop: '1px solid rgba(77,70,55,0.4)',
         }}>
           {[
-            { num: 'Est. 2026', label: 'Historia viva' },
-            { num: '190–450€', label: 'Tarifa por evento' },
-            { num: '100%', label: 'Chófer de etiqueta' },
-            { num: 'Gandía', label: 'La Safor · Valencia' },
+            { title: 'Flota Exclusiva', subtitle: 'Solo clásicos originales' },
+            { title: 'Servicio VIP', subtitle: 'Chófer uniformado de etiqueta' },
+            { title: 'Presencia Real', subtitle: 'Impacto visual garantizado' },
+            { title: 'Puntualidad Excelente', subtitle: 'Compromiso total con tu horario' },
           ].map((item) => (
-            <div key={item.label}>
+            <div key={item.title}>
               <div style={{
                 fontFamily: 'Cormorant Garamond, serif',
-                fontSize: '1.6rem',
+                fontSize: 'clamp(1.2rem, 2vw, 1.5rem)',
                 fontWeight: 600,
                 color: '#C9A84C',
-                lineHeight: 1,
+                lineHeight: 1.2,
                 marginBottom: '0.25rem',
               }}>
-                {item.num}
+                {item.title}
               </div>
               <div style={{
                 fontFamily: 'DM Sans, sans-serif',
-                fontSize: '0.65rem',
-                fontWeight: 400,
-                color: '#6B5C40',
-                letterSpacing: '0.15em',
+                fontSize: '0.68rem',
+                fontWeight: 600,
+                color: '#C5B484',
+                letterSpacing: '0.1em',
                 textTransform: 'uppercase',
+                maxWidth: '200px',
+                lineHeight: 1.4
               }}>
-                {item.label}
+                {item.subtitle}
               </div>
             </div>
           ))}

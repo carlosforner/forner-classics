@@ -25,9 +25,9 @@ const vehicles = [
     image: '/images/chevrolet.webp.png',
     imageAlt: 'Chevrolet International AC 1930 de Forner Classics para bodas y eventos en Gandía Valencia',
     tarifas: [
-      { tipo: 'Bodas: Gran Reserva', precio: '680€' },
+      { tipo: 'Bodas: Gran Reserva', precio: '600€' },
       { tipo: 'Rodajes: Sesión Set', precio: '320€' },
-      { tipo: 'Turismo: Ruta Safor', precio: '175€' },
+      { tipo: 'Turismo: Ruta Safor', precio: '200€' },
     ],
     available: true,
     tag: 'El más solicitado',
@@ -53,9 +53,9 @@ const vehicles = [
     image: '/images/carav.webp.png',
     imageAlt: 'Renault Caravelle Rojo 1962 de Forner Classics para rodajes y eventos en Valencia',
     tarifas: [
-      { tipo: 'Bodas: Gran Reserva', precio: '550€' },
+      { tipo: 'Bodas: Gran Reserva', precio: '500€' },
       { tipo: 'Rodajes: Sesión Set', precio: '250€' },
-      { tipo: 'Turismo: Ruta Safor', precio: '100€' },
+      { tipo: 'Turismo: Ruta Safor', precio: '160€' },
     ],
     available: true,
     tag: 'El más fotogénico',
@@ -168,7 +168,8 @@ export default function FlotaSection() {
                 transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
                 overflow: 'hidden',
                 opacity: vehicle.available ? 1 : 0.85,
-                filter: vehicle.available ? 'none' : 'grayscale(0.4)'
+                filter: vehicle.available ? 'none' : 'grayscale(0.4)',
+                scrollMarginTop: '100px'
               }}
               onMouseEnter={(e) => {
                 if (vehicle.available) {
@@ -256,23 +257,24 @@ export default function FlotaSection() {
                   }}>
                     <span style={{
                       fontFamily: 'Cormorant Garamond, serif',
-                      fontSize: '3.5rem',
+                      fontSize: '3.8rem',
                       fontWeight: 700,
-                      color: 'rgba(201,168,76,0.18)',
+                      color: 'rgba(232, 213, 163, 0.65)',
                       lineHeight: 1,
                       userSelect: 'none',
+                      textShadow: '0 4px 12px rgba(0,0,0,0.4)',
                     }}>
                       {vehicle.year}
                     </span>
                     <span style={{
                       fontFamily: 'DM Sans, sans-serif',
-                      fontSize: '0.7rem',
-                      color: 'rgba(232,213,163,0.7)',
-                      letterSpacing: '0.1em',
-                      background: 'rgba(0,0,0,0.5)',
-                      padding: '0.3rem 0.7rem',
+                      fontSize: '0.73rem',
+                      color: '#FFFFFF',
+                      fontWeight: 500,
+                      letterSpacing: '0.12em',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.8)',
                     }}>
-                      {vehicle.color} · {vehicle.pax}
+                      {vehicle.era.toUpperCase()} · {vehicle.color} · {vehicle.pax}
                     </span>
                   </div>
                 </div>

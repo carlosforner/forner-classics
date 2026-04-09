@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
-@import "tailwindcss";
 
 /* ═══════════════════════════════════════════
    FORNER CLASSICS — ART DÉCO LUXURY DESIGN SYSTEM
@@ -45,6 +43,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scroll-padding-top: 100px; /* Offset for the sticky navbar */
 }
 
 /* Global focus-visible ring (OB-17) — replaces browser default blue outline */
@@ -296,15 +295,19 @@ p { color: var(--text-secondary); line-height: 1.75; }
 .badge-gold {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.875rem;
-  background: transparent;
+  padding: 0.4rem 1.4rem;
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid var(--gold);
   color: var(--gold);
-  font-family: var(--font-sans);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .badge-coming {

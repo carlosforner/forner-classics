@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Link2, Mail, Phone, MapPin, Instagram, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
@@ -24,9 +25,11 @@ export default function Footer() {
           <div>
             {/* Logo */}
             <div style={{ marginBottom: '2rem' }}>
-              <img
-                src="/images/logo-footer.png.jpg"
+              <Image
+                src="/images/logo-principal.png.jpg"
                 alt="Forner Classics Sello Oficial"
+                width={120}
+                height={120}
                 style={{
                   height: '120px',
                   width: 'auto',
@@ -253,15 +256,26 @@ export default function Footer() {
             © {year} Forner Classics · Gandía, Valencia, España · Todos los derechos reservados
           </span>
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            {['Política de Privacidad', 'Aviso Legal', 'Política de Cookies'].map((l) => (
-              <span key={l} style={{
-                fontFamily: 'DM Sans, sans-serif',
-                fontSize: '0.7rem',
-                color: '#4D4637',
-                cursor: 'pointer',
-              }}>
-                {l}
-              </span>
+            {[
+              { label: 'Política de Privacidad', href: '/privacidad' },
+              { label: 'Aviso Legal', href: '/aviso-legal' },
+            ].map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                style={{
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontSize: '0.7rem',
+                  color: '#4D4637',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease',
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#C9A84C'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#4D4637'; }}
+              >
+                {l.label}
+              </a>
             ))}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

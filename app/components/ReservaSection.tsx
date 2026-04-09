@@ -17,9 +17,9 @@ const vehicles = [
     tag: 'El más solicitado',
     available: true,
     tarifas: [
-      { tipo: 'Bodas: Gran Reserva', precio: '680€' },
+      { tipo: 'Bodas: Gran Reserva', precio: '600€' },
       { tipo: 'Rodajes: Sesión Set', precio: '320€' },
-      { tipo: 'Turismo: Ruta Safor', precio: '175€' },
+      { tipo: 'Turismo: Ruta Safor', precio: '200€' },
     ],
   },
   {
@@ -32,9 +32,9 @@ const vehicles = [
     tag: 'El más fotogénico',
     available: true,
     tarifas: [
-      { tipo: 'Bodas: Gran Reserva', precio: '550€' },
+      { tipo: 'Bodas: Gran Reserva', precio: '500€' },
       { tipo: 'Rodajes: Sesión Set', precio: '250€' },
-      { tipo: 'Turismo: Ruta Safor', precio: '100€' },
+      { tipo: 'Turismo: Ruta Safor', precio: '160€' },
     ],
   },
   {
@@ -583,19 +583,79 @@ export default function ReservaSection() {
 
               {/* Tipo de evento */}
               <Field label="Tipo de evento *" error={errors.tipoEvento}>
-                <select className="input-luxury" name="tipoEvento" required value={formData.tipoEvento} onChange={handleChange}>
-                  <option value="">Seleccione el tipo de evento...</option>
-                  {eventTypes.map(e => <option key={e.value} value={e.value}>{e.label}</option>)}
-                </select>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
+                  {eventTypes.map(e => {
+                    const isSelected = formData.tipoEvento === e.value;
+                    return (
+                      <button
+                        key={e.value}
+                        type="button"
+                        onClick={() => {
+                          setFormData(prev => ({ ...prev, tipoEvento: e.value, segmento: '' }));
+                          setErrors(prev => ({ ...prev, tipoEvento: '', segmento: '' }));
+                        }}
+                        style={{
+                          padding: '0.875rem',
+                          background: isSelected ? 'rgba(201,168,76,0.12)' : 'rgba(77,70,55,0.05)',
+                          border: isSelected ? '1px solid #C9A84C' : '1px solid rgba(77,70,55,0.2)',
+                          color: isSelected ? '#C9A84C' : '#A09070',
+                          cursor: 'pointer',
+                          fontFamily: 'DM Sans, sans-serif',
+                          fontSize: '0.65rem',
+                          fontWeight: isSelected ? 600 : 400,
+                          letterSpacing: '0.12em',
+                          textTransform: 'uppercase',
+                          transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                          textAlign: 'center',
+                          borderRadius: '2px'
+                        }}
+                        onMouseEnter={e => { if (!isSelected) { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.4)'; (e.currentTarget as HTMLElement).style.background = 'rgba(77,70,55,0.08)'; } }}
+                        onMouseLeave={e => { if (!isSelected) { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(77,70,55,0.2)'; (e.currentTarget as HTMLElement).style.background = 'rgba(77,70,55,0.05)'; } }}
+                      >
+                        {e.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </Field>
 
               {/* Segmento */}
               {formData.tipoEvento && (
                 <Field label="Segmento del evento *" error={errors.segmento}>
-                  <select className="input-luxury" name="segmento" required value={formData.segmento} onChange={handleChange}>
-                    <option value="">Seleccione el segmento...</option>
-                    {currentSegments.map(s => <option key={s} value={s}>{s}</option>)}
-                  </select>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem' }}>
+                    {currentSegments.map(s => {
+                      const isSelected = formData.segmento === s;
+                      return (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => {
+                            setFormData(prev => ({ ...prev, segmento: s }));
+                            setErrors(prev => ({ ...prev, segmento: '' }));
+                          }}
+                          style={{
+                            padding: '0.875rem',
+                            background: isSelected ? 'rgba(201,168,76,0.12)' : 'rgba(77,70,55,0.05)',
+                            border: isSelected ? '1px solid #C9A84C' : '1px solid rgba(77,70,55,0.2)',
+                            color: isSelected ? '#C9A84C' : '#A09070',
+                            cursor: 'pointer',
+                            fontFamily: 'DM Sans, sans-serif',
+                            fontSize: '0.65rem',
+                            fontWeight: isSelected ? 600 : 400,
+                            letterSpacing: '0.08em',
+                            transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                            textAlign: 'left',
+                            paddingLeft: '1.25rem',
+                            borderRadius: '2px'
+                          }}
+                          onMouseEnter={e => { if (!isSelected) { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.4)'; (e.currentTarget as HTMLElement).style.background = 'rgba(77,70,55,0.08)'; } }}
+                          onMouseLeave={e => { if (!isSelected) { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(77,70,55,0.2)'; (e.currentTarget as HTMLElement).style.background = 'rgba(77,70,55,0.05)'; } }}
+                        >
+                          {isSelected ? '✓ ' : ''}{s}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </Field>
               )}
 

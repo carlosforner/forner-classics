@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Heart, Camera, Compass, Check } from 'lucide-react';
+import { Heart, Camera, Compass, Check, Info } from 'lucide-react';
 
 const UNAVAILABLE_VEHICLES = ['SEAT 850 1968', 'Renault 4 1982'];
 
@@ -28,8 +28,8 @@ const services = [
       'Atención personalizada constante durante todo el servicio.',
     ],
     tarifas: [
-      { vehiculo: 'Chevrolet International AC 1930', precio: '680€' },
-      { vehiculo: 'Renault Caravelle 1962', precio: '550€' },
+      { vehiculo: 'Chevrolet International AC 1930', precio: '600€' },
+      { vehiculo: 'Renault Caravelle 1962', precio: '500€' },
       { vehiculo: 'SEAT 850 1968', precio: '440€' },
       { vehiculo: 'Renault 4 1982', precio: '350€' },
     ],
@@ -52,8 +52,8 @@ const services = [
       'Parada para fotografías con el vehículo en un punto panorámico.',
     ],
     tarifas: [
-      { vehiculo: 'Chevrolet International AC 1930', precio: '175€' },
-      { vehiculo: 'Renault Caravelle 1962', precio: '100€' },
+      { vehiculo: 'Chevrolet International AC 1930', precio: '200€' },
+      { vehiculo: 'Renault Caravelle 1962', precio: '160€' },
       { vehiculo: 'SEAT 850 1968', precio: '80€' },
       { vehiculo: 'Renault 4 1982', precio: '65€' },
     ],
@@ -285,6 +285,27 @@ export default function ServiciosSection() {
                           }}>{t.precio}</span>
                         </div>
                       ))}
+                      
+                      {/* Extra info row */}
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.65rem',
+                        padding: '0.75rem 1rem',
+                        background: 'rgba(201,168,76,0.03)',
+                        borderTop: '1px solid rgba(77,70,55,0.4)',
+                      }}>
+                        <Info size={14} color="#C9A84C" style={{ flexShrink: 0 }} />
+                        <span style={{ 
+                          fontFamily: 'DM Sans, sans-serif', 
+                          fontSize: '0.7rem', 
+                          color: '#A09070', 
+                          letterSpacing: '0.01em',
+                          lineHeight: 1.4
+                        }}>
+                          Hora adicional de servicio: 100€ (Sujeto a margen operativo del chófer)
+                        </span>
+                      </div>
                     </div>
 
                     <button onClick={scrollToReserva} className="btn-primary" id={`cta-servicio-${service.id}`}>

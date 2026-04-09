@@ -28,6 +28,10 @@ const faqs = [
     q: '¿Qué ocurre si el tiempo es adverso el día del evento?',
     a: 'Tenemos protocolo para días de lluvia. El chófer llevará siempre un paraguas elegante para protegerle. El Renault Caravelle tiene capota que puede cerrarse. Para el Chevrolet 1930 se advierte de la exposición a elementos: lo analizamos caso por caso y buscamos siempre la mejor solución para su evento.',
   },
+  {
+    q: '¿Qué ocurre si necesito el vehículo por más tiempo del contratado?',
+    a: 'No hay inconveniente. Si el evento se alarga más allá de las horas estipuladas en el paquete seleccionado, el tiempo adicional se facturará como horas extra a razón de 100€ por cada hora adicional. Siempre recomendamos prever bien los tiempos en la hoja de ruta inicial para evitar imprevistos.',
+  },
 ];
 
 export default function FaqSection() {
