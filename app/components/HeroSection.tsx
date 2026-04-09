@@ -182,6 +182,7 @@ export default function HeroSection() {
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && scrollToFlota()}
         aria-label="Desplazarse a la sección de flota"
+        className="hero-scroll-indicator"
         style={{
           position: 'absolute',
           bottom: '2.5rem',

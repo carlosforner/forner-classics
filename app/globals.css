@@ -424,6 +424,10 @@ p { color: var(--text-secondary); line-height: 1.75; }
   white-space: nowrap;
 }
 
+.hero-scroll-indicator {
+  display: flex;
+}
+
 .hero-trust-bar {
   display: flex;
   flex-wrap: wrap;
@@ -451,6 +455,10 @@ p { color: var(--text-secondary); line-height: 1.75; }
   }
   .hero-content {
     padding-top: 4.5rem;
+    padding-bottom: 5rem; /* prevent trust bar overlapping scroll indicator */
+  }
+  .hero-scroll-indicator {
+    display: none; /* hidden on mobile — touch users scroll naturally */
   }
 }
 
