@@ -122,7 +122,7 @@ function BookingCalendar({ selectedDate, onSelect, reservedDates = [] }: { selec
   return (
     <div>
       {/* Calendar */}
-      <div style={{ background: 'var(--surface-card)', border: '1px solid rgba(77,70,55,0.4)', padding: '1.75rem' }}>
+      <div style={{ background: 'var(--surface-card)', border: '1px solid rgba(77,70,55,0.4)', padding: 'clamp(1rem, 4vw, 1.75rem)' }}>
         {/* Month nav */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <button onClick={prevMonth} style={{ background: 'none', border: '1px solid rgba(77,70,55,0.5)', color: '#A09070', cursor: 'pointer', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
@@ -444,7 +444,7 @@ export default function ReservaSection() {
               Seleccione su vehículo
             </h3>
             {/* Available vehicles */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1px', background: 'rgba(77,70,55,0.25)', marginBottom: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: '1px', background: 'rgba(77,70,55,0.25)', marginBottom: '2rem' }}>
               {vehicles.filter(v => v.available).map(v => (
                 <button
                   key={v.id}
@@ -494,7 +494,7 @@ export default function ReservaSection() {
               <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.6rem', fontWeight: 600, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#4D4637', textAlign: 'center', marginBottom: '1rem' }}>
                 — Flota en expansión —
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1px', background: 'rgba(77,70,55,0.15)', opacity: 0.55 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 48%), 1fr))', gap: '1px', background: 'rgba(77,70,55,0.15)', opacity: 0.55 }}>
                 {vehicles.filter(v => !v.available).map(v => (
                   <div key={v.id} style={{ background: 'var(--surface-card)', padding: 0 }}>
                     <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', background: '#0a0a0a', filter: 'grayscale(0.7)' }}>
@@ -622,7 +622,7 @@ export default function ReservaSection() {
               {/* Segmento */}
               {formData.tipoEvento && (
                 <Field label="Segmento del evento *" error={errors.segmento}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: '0.75rem' }}>
                     {currentSegments.map(s => {
                       const isSelected = formData.segmento === s;
                       return (

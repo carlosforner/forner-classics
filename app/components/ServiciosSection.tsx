@@ -116,7 +116,7 @@ export default function ServiciosSection() {
             a medida para los momentos que no admiten lo ordinario.
           </p>
           
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }} className="services-nav">
             {services.map(s => (
               <button 
                 key={`btn-${s.id}`} 
@@ -264,7 +264,7 @@ export default function ServiciosSection() {
                           borderBottom: i < service.tarifas.length - 1 ? '1px solid rgba(77,70,55,0.2)' : 'none',
                           opacity: UNAVAILABLE_VEHICLES.includes(t.vehiculo) ? 0.5 : 1,
                         }}>
-                          <span style={{
+                          <span className="price-row-label" style={{
                             fontFamily: 'DM Sans, sans-serif',
                             fontSize: '0.78rem',
                             color: '#A09070',

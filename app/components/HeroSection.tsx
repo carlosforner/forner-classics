@@ -48,6 +48,14 @@ export default function HeroSection() {
         zIndex: 1,
       }} />
 
+      {/* Left side scrim for text legibility */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 70%)',
+        zIndex: 2,
+      }} />
+
       {/* Art Déco geometric border overlay */}
       <div style={{
         position: 'absolute',
@@ -121,11 +129,10 @@ export default function HeroSection() {
           fontFamily: 'DM Sans, sans-serif',
           fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
           fontWeight: 300,
-          color: '#E8D5A3',
+          color: '#C5B484',
           maxWidth: '560px',
           lineHeight: 1.75,
           marginBottom: '3rem',
-          textShadow: '0 2px 20px rgba(0,0,0,0.6)',
         }}>
           Experiencias irrepetibles en vehículos históricos. Chófer profesional incluido.
           Para bodas, rodajes y momentos que merecen un marco a la altura.

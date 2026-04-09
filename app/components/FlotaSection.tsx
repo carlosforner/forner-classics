@@ -254,7 +254,9 @@ export default function FlotaSection() {
                     display: 'flex',
                     alignItems: 'flex-end',
                     justifyContent: 'space-between',
-                  }}>
+                    flexWrap: 'wrap',
+                    gap: '0.25rem',
+                  }} className="vehicle-info-bar">
                     <span style={{
                       fontFamily: 'Cormorant Garamond, serif',
                       fontSize: '3.8rem',
@@ -328,10 +330,9 @@ export default function FlotaSection() {
                   <ul style={{
                     listStyle: 'none',
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
                     gap: '0.5rem 1rem',
                     marginBottom: '1.5rem',
-                  }}>
+                  }} className="features-grid-2" data-cols="2">
                     {vehicle.features.map((f) => (
                       <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
                         <Check size={13} color="#C9A84C" style={{ flexShrink: 0, marginTop: '3px' }} />
@@ -402,7 +403,7 @@ export default function FlotaSection() {
                           padding: '0.75rem 1rem',
                           borderBottom: i < vehicle.tarifas.length - 1 ? '1px solid rgba(77,70,55,0.25)' : 'none',
                         }}>
-                          <span style={{
+                          <span className="price-row-label" style={{
                             fontFamily: 'DM Sans, sans-serif',
                             fontSize: '0.78rem',
                             color: '#A09070',
