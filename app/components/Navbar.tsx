@@ -529,30 +529,97 @@ export default function Navbar() {
           borderTop: '1px solid rgba(77,70,55,0.4)',
           padding: '2rem 1.25rem',
         }}>
-          {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => handleNavClick(link.href)}
-              style={{
-                display: 'block',
-                width: '100%',
-                background: 'none',
-                border: 'none',
-                textAlign: 'left',
-                color: '#E8D5A3',
-                fontFamily: 'DM Sans, sans-serif',
-                fontSize: '0.9rem',
-                fontWeight: 400,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                cursor: 'pointer',
-                padding: '1rem 0',
-                borderBottom: '1px solid rgba(77,70,55,0.2)',
-              }}
-            >
-              {link.label}
-            </button>
-          ))}
+          {navLinks.map((link) => {
+            if (link.label === 'Contacto') {
+              return (
+                <div key={link.href}>
+                  <button
+                    onClick={() => setDropdownContactoOpen(!dropdownContactoOpen)}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                      background: 'none',
+                      border: 'none',
+                      textAlign: 'left',
+                      color: '#E8D5A3',
+                      fontFamily: 'DM Sans, sans-serif',
+                      fontSize: '0.9rem',
+                      fontWeight: 400,
+                      letterSpacing: '0.15em',
+                      textTransform: 'uppercase',
+                      cursor: 'pointer',
+                      padding: '1rem 0',
+                      borderBottom: '1px solid rgba(77,70,55,0.2)',
+                    }}
+                  >
+                    <span>{link.label}</span>
+                    <span style={{ 
+                      fontSize: '0.6rem', 
+                      transform: dropdownContactoOpen ? 'rotate(180deg)' : 'rotate(0)',
+                      transition: 'transform 0.3s ease',
+                      color: '#C9A84C'
+                    }}>▼</span>
+                  </button>
+                  {dropdownContactoOpen && (
+                    <div style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                      {contactOptions.map(opt => (
+                        <a
+                          key={opt.name}
+                          href={opt.href}
+                          target={opt.href.startsWith('http') ? '_blank' : undefined}
+                          rel={opt.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          onClick={() => setIsOpen(false)}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.75rem',
+                            padding: '0.875rem 1rem',
+                            textDecoration: 'none',
+                            color: '#A09070',
+                            fontFamily: 'DM Sans, sans-serif',
+                            fontSize: '0.75rem',
+                            letterSpacing: '0.05em',
+                            borderLeft: '1px solid rgba(201,168,76,0.2)',
+                            marginLeft: '0.5rem'
+                          }}
+                        >
+                          <span style={{ color: '#C9A84C' }}>{opt.icon}</span>
+                          {opt.name}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <button
+                key={link.href}
+                onClick={() => handleNavClick(link.href)}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  background: 'none',
+                  border: 'none',
+                  textAlign: 'left',
+                  color: '#E8D5A3',
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontSize: '0.9rem',
+                  fontWeight: 400,
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  padding: '1rem 0',
+                  borderBottom: '1px solid rgba(77,70,55,0.2)',
+                }}
+              >
+                {link.label}
+              </button>
+            );
+          })}
           <button
             onClick={() => handleNavClick('#reserva')}
             className="btn-primary"
