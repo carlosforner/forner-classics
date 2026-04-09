@@ -395,27 +395,52 @@ export default function FlotaSection() {
                           textTransform: 'uppercase',
                         }}>Tarifas por tipo de servicio</span>
                       </div>
-                      {vehicle.tarifas.map((t, i) => (
-                        <div key={t.tipo} style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          padding: '0.75rem 1rem',
-                          borderBottom: i < vehicle.tarifas.length - 1 ? '1px solid rgba(77,70,55,0.25)' : 'none',
-                        }}>
-                          <span className="price-row-label" style={{
-                            fontFamily: 'DM Sans, sans-serif',
-                            fontSize: '0.78rem',
-                            color: '#A09070',
-                          }}>{t.tipo}</span>
-                          <span style={{
-                            fontFamily: 'Cormorant Garamond, serif',
-                            fontSize: '1.2rem',
-                            fontWeight: 500,
-                            color: '#C9A84C',
-                          }}>{t.precio}</span>
-                        </div>
-                      ))}
+                      {vehicle.tarifas.map((t, i) => {
+                        let targetId = '';
+                        if (t.tipo.includes('Bodas')) targetId = '#servicio-bodas';
+                        else if (t.tipo.includes('Rodajes')) targetId = '#servicio-rodajes';
+                        else if (t.tipo.includes('Turismo')) targetId = '#servicio-turismo';
+
+                        return (
+                          <div 
+                            key={t.tipo} 
+                            onClick={() => {
+                              if (targetId) {
+                                const el = document.querySelector(targetId);
+                                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                              }
+                            }}
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              padding: '0.75rem 1rem',
+                              borderBottom: i < vehicle.tarifas.length - 1 ? '1px solid rgba(77,70,55,0.25)' : 'none',
+                              cursor: targetId ? 'pointer' : 'default',
+                              transition: 'background-color 0.2s',
+                            }}
+                            onMouseEnter={(e) => {
+                              if (targetId) e.currentTarget.style.backgroundColor = 'rgba(201,168,76,0.05)';
+                            }}
+                            onMouseLeave={(e) => {
+                              if (targetId) e.currentTarget.style.backgroundColor = 'transparent';
+                            }}
+                          >
+                            <span className="price-row-label" style={{
+                              fontFamily: 'DM Sans, sans-serif',
+                              fontSize: '0.78rem',
+                              color: '#A09070',
+                              transition: 'color 0.2s',
+                            }}>{t.tipo}</span>
+                            <span style={{
+                              fontFamily: 'Cormorant Garamond, serif',
+                              fontSize: '1.2rem',
+                              fontWeight: 500,
+                              color: '#C9A84C',
+                            }}>{t.precio}</span>
+                          </div>
+                        );
+                      })}
                     </div>
                     {vehicle.available ? (
                       <button
