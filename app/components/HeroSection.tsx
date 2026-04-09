@@ -44,7 +44,7 @@ export default function HeroSection() {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.8) 100%)',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.85) 100%)',
         zIndex: 1,
       }} />
 
@@ -77,19 +77,12 @@ export default function HeroSection() {
       ))}
 
       {/* Content */}
-      <div className="container-luxury" style={{ position: 'relative', zIndex: 3, paddingTop: '6rem' }}>
+      <div className="container-luxury hero-content">
 
         {/* Section label */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
           <div style={{ height: '1px', width: '40px', background: 'var(--gold)' }} />
-          <span style={{
-            fontFamily: 'DM Sans, sans-serif',
-            fontSize: '0.65rem',
-            fontWeight: 600,
-            letterSpacing: '0.35em',
-            color: '#C9A84C',
-            textTransform: 'uppercase',
-          }}>
+          <span className="hero-location">
             Gandía · La Safor · Valencia
           </span>
         </div>
@@ -128,10 +121,11 @@ export default function HeroSection() {
           fontFamily: 'DM Sans, sans-serif',
           fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
           fontWeight: 300,
-          color: '#C5B484',
+          color: '#E8D5A3',
           maxWidth: '560px',
           lineHeight: 1.75,
           marginBottom: '3rem',
+          textShadow: '0 2px 20px rgba(0,0,0,0.6)',
         }}>
           Experiencias irrepetibles en vehículos históricos. Chófer profesional incluido.
           Para bodas, rodajes y momentos que merecen un marco a la altura.
@@ -148,13 +142,7 @@ export default function HeroSection() {
         </div>
 
         {/* Trust Bar */}
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '2.5rem',
-          paddingTop: '2rem',
-          borderTop: '1px solid rgba(77,70,55,0.4)',
-        }}>
+        <div className="hero-trust-bar">
           {[
             { title: 'Flota Exclusiva', subtitle: 'Solo clásicos originales' },
             { title: 'Servicio VIP', subtitle: 'Chófer uniformado de etiqueta' },
@@ -172,16 +160,7 @@ export default function HeroSection() {
               }}>
                 {item.title}
               </div>
-              <div style={{
-                fontFamily: 'DM Sans, sans-serif',
-                fontSize: '0.68rem',
-                fontWeight: 600,
-                color: '#C5B484',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                maxWidth: '200px',
-                lineHeight: 1.4
-              }}>
+              <div className="hero-trust-subtitle">
                 {item.subtitle}
               </div>
             </div>
