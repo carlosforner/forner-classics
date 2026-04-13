@@ -596,6 +596,55 @@ p { color: var(--text-secondary); line-height: 1.75; }
   .grid-fleet { grid-template-columns: 1fr 1fr; }
 }
 
+/* ── Horizontal Fleet Layout ── */
+.fleet-horizontal-layout {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  -webkit-overflow-scrolling: touch;
+  /* Hide scrollbar by default for cleanliness */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 168, 76, 0.4) transparent;
+}
+
+.fleet-horizontal-layout::-webkit-scrollbar {
+  height: 6px;
+}
+.fleet-horizontal-layout::-webkit-scrollbar-track {
+  background: transparent;
+}
+.fleet-horizontal-layout::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.4);
+  border-radius: 6px;
+}
+
+.fleet-horizontal-layout > article {
+  flex: 0 0 85vw; /* Mobile view defaults to almost full width */
+  scroll-snap-align: center;
+}
+
+@media (min-width: 768px) {
+  .fleet-horizontal-layout > article {
+    flex: 0 0 45vw; /* Tablet view: shows 2 cards partially */
+  }
+}
+
+@media (min-width: 1024px) {
+  .fleet-horizontal-layout {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow-x: visible;
+    gap: 1rem;
+    padding-bottom: 0;
+  }
+  .fleet-horizontal-layout > article {
+    flex: none;
+    scroll-snap-align: none;
+  }
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .btn-primary, .btn-ghost {

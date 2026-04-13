@@ -3,9 +3,7 @@ import HeroSection from './components/HeroSection';
 import FlotaSection from './components/FlotaSection';
 import ServiciosSection from './components/ServiciosSection';
 import HistoriaSection from './components/HistoriaSection';
-
-import FaqSection from './components/FaqSection';
-import ReservaSection from './components/ReservaSection';
+import CtaSection from './components/CtaSection';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 
@@ -61,9 +59,7 @@ export default function Home() {
         <FlotaSection />
         <ServiciosSection />
         <HistoriaSection />
-
-        <FaqSection />
-        <ReservaSection />
+        <CtaSection />
       </main>
 
       <Footer />
