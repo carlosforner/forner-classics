@@ -607,6 +607,10 @@ p { color: var(--text-secondary); line-height: 1.75; }
   /* Hide scrollbar by default for cleanliness */
   scrollbar-width: thin;
   scrollbar-color: rgba(201, 168, 76, 0.4) transparent;
+  
+  /* Bleed to edge on mobile/tablet */
+  margin: 0 calc(-1 * var(--container-pad));
+  padding: 1rem var(--container-pad) 2rem var(--container-pad);
 }
 
 .fleet-horizontal-layout::-webkit-scrollbar {
@@ -620,13 +624,13 @@ p { color: var(--text-secondary); line-height: 1.75; }
   border-radius: 6px;
 }
 
-.fleet-horizontal-layout > article {
-  flex: 0 0 85vw; /* Mobile view defaults to almost full width */
+.fleet-horizontal-layout > a {
+  flex: 0 0 80vw; /* Mobile view: 80vw to tease the next card */
   scroll-snap-align: center;
 }
 
 @media (min-width: 768px) {
-  .fleet-horizontal-layout > article {
+  .fleet-horizontal-layout > a {
     flex: 0 0 45vw; /* Tablet view: shows 2 cards partially */
   }
 }
@@ -637,9 +641,10 @@ p { color: var(--text-secondary); line-height: 1.75; }
     grid-template-columns: repeat(4, 1fr);
     overflow-x: visible;
     gap: 1rem;
-    padding-bottom: 0;
+    margin: 0;           /* Reset edge bleed for desktop */
+    padding: 0;          /* Reset edge padding for desktop */
   }
-  .fleet-horizontal-layout > article {
+  .fleet-horizontal-layout > a {
     flex: none;
     scroll-snap-align: none;
   }

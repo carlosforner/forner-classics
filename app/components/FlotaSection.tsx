@@ -101,7 +101,7 @@ export default function FlotaSection() {
                     <span style={{
                       display: 'inline-block',
                       fontFamily: 'DM Sans, sans-serif',
-                      fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.15em',
+                      fontSize: 'clamp(0.55rem, 2vw, 0.65rem)', fontWeight: 600, letterSpacing: '0.15em',
                       color: vehicle.available ? '#1A1200' : '#888',
                       background: vehicle.available ? '#C9A84C' : '#333',
                       padding: '0.25rem 0.6rem', textTransform: 'uppercase',
@@ -117,12 +117,12 @@ export default function FlotaSection() {
                     display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '0.1rem',
                   }}>
                     <span style={{
-                      fontFamily: 'Cormorant Garamond, serif', fontSize: '2.2rem', fontWeight: 700,
+                      fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(1.8rem, 6vw, 2.2rem)', fontWeight: 700,
                       color: 'rgba(232,213,163,0.85)', lineHeight: 1,
                       textShadow: '0 2px 8px rgba(0,0,0,0.6)',
                     }}>{vehicle.year}</span>
                     <span style={{
-                      fontFamily: 'DM Sans, sans-serif', fontSize: '0.55rem',
+                      fontFamily: 'DM Sans, sans-serif', fontSize: 'clamp(0.55rem, 2vw, 0.65rem)',
                       color: '#fff', fontWeight: 500, letterSpacing: '0.1em',
                       textShadow: '0 1px 3px rgba(0,0,0,0.8)',
                     }}>{vehicle.pax}</span>
@@ -136,7 +136,7 @@ export default function FlotaSection() {
                 }}>
                   <h3 style={{
                     fontFamily: 'Cormorant Garamond, serif',
-                    fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)', fontWeight: 300,
+                    fontSize: 'clamp(1.2rem, 3.5vw, 1.6rem)', fontWeight: 300,
                     color: '#E8D5A3', letterSpacing: '0.04em',
                     textTransform: 'uppercase', textAlign: 'center',
                   }}>{vehicle.name}</h3>
@@ -147,10 +147,10 @@ export default function FlotaSection() {
                   }}>
                     <strong style={{
                       display: 'block', color: '#C9A84C', letterSpacing: '0.1em',
-                      textTransform: 'uppercase', fontSize: '0.5rem', marginBottom: '0.15rem',
+                      textTransform: 'uppercase', fontSize: 'clamp(0.55rem, 2vw, 0.6rem)', marginBottom: '0.15rem',
                       fontFamily: 'DM Sans, sans-serif',
                     }}>Ideal para</strong>
-                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.6rem', color: '#A09070' }}>
+                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 'clamp(0.65rem, 2.5vw, 0.75rem)', color: '#A09070' }}>
                       {vehicle.idealFor}
                     </span>
                   </div>
@@ -160,7 +160,7 @@ export default function FlotaSection() {
                     textAlign: 'center', paddingTop: '0.5rem',
                   }}>
                     <span style={{
-                      fontFamily: 'DM Sans, sans-serif', fontSize: '0.65rem',
+                      fontFamily: 'DM Sans, sans-serif', fontSize: 'clamp(0.65rem, 2vw, 0.75rem)',
                       color: '#C9A84C', letterSpacing: '0.1em', textTransform: 'uppercase',
                     }}>
                       Ver detalles →
