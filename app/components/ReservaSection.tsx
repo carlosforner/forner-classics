@@ -277,7 +277,7 @@ export default function ReservaSection() {
         .neq('estado', 'cancelada');
         
       if (!error && data) {
-        setReservedDates(data.map(r => r.dia_del_evento));
+        setReservedDates(data.map(r => r.dia_del_evento.substring(0, 10)));
       }
     };
     fetchReservations();
@@ -326,7 +326,7 @@ export default function ReservaSection() {
       let currentPrice = 'A consultar';
       // 1. Guardar reserva en Supabase (Bloquea fecha)
       if (selectedVehicle && selectedDate) {
-        const isoDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+        const isoDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}T12:00:00`;
         // Buscar el precio basado en el tipo de evento
         const eventLabel = eventTypes.find(e => e.value === formData.tipoEvento)?.label || '';
         
