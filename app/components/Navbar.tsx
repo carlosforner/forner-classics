@@ -9,7 +9,7 @@ import { Menu, X } from 'lucide-react';
 const navLinks = [
   { label: 'La Flota', href: '/#flota' },
   { label: 'Servicios', href: '/#servicios' },
-  { label: 'Nuestra Historia', href: '/#historia' },
+  { label: 'Nosotros', href: '/#historia' },
   { label: 'FAQs', href: '/faq' },
 ];
 
@@ -69,8 +69,9 @@ export default function Navbar() {
             style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
           >
             <Image
-              src="/images/logo-navbar.png.jpg"
+              src="/images/logo-navbar.png"
               alt="Forner Classics Logo"
+              unoptimized
               width={220}
               height={65}
               priority

@@ -9,7 +9,7 @@ export default function HistoriaSection() {
         <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
 
           {/* Header */}
-          <span className="section-label">— Nuestra Historia —</span>
+          <span className="section-label">— Nosotros —</span>
           <h2 style={{
             fontFamily: 'Cormorant Garamond, serif',
             fontSize: 'clamp(2rem, 5vw, 3rem)',

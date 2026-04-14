@@ -110,11 +110,11 @@ export default function HeroSection() {
           }}
         >
           <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', borderWidth: 0 }}>Alquiler de Coches Clásicos en Gandía y Valencia. </span>
-          Donde el tiempo{' '}
+          Alquiler de{' '}
           <span style={{
             fontStyle: 'italic',
             color: '#C9A84C',
-          }}>conduce.</span>
+          }}>coches clásicos</span>
         </h1>
 
         {/* Art Déco divider */}
@@ -134,8 +134,7 @@ export default function HeroSection() {
           lineHeight: 1.75,
           marginBottom: '3rem',
         }}>
-          Experiencias irrepetibles en vehículos históricos. Chófer profesional incluido.
-          Para bodas, rodajes y momentos que merecen un marco a la altura.
+          Ofrecemos <strong style={{ color: '#E8D5A3', fontWeight: 500 }}>servicios con conductor para bodas, turismos y rodajes</strong>. Experiencias irrepetibles en vehículos históricos para momentos que merecen un marco a la altura.
         </p>
 
         {/* CTAs */}
@@ -149,26 +148,23 @@ export default function HeroSection() {
         </div>
 
         {/* Trust Bar */}
-        <div className="hero-trust-bar">
+        <div className="hero-trust-bar" style={{ justifyContent: 'center', gap: '4rem' }}>
           {[
-            { title: 'Flota Exclusiva', subtitle: 'Solo clásicos originales' },
-            { title: 'Servicio VIP', subtitle: 'Chófer uniformado de etiqueta' },
-            { title: 'Presencia Real', subtitle: 'Impacto visual garantizado' },
-            { title: 'Puntualidad Excelente', subtitle: 'Compromiso total con tu horario' },
+            { title: 'Clásicos Originales' },
+            { title: 'Chófer Uniformado' },
+            { title: 'Profesionalidad' },
           ].map((item) => (
-            <div key={item.title}>
+            <div key={item.title} style={{ textAlign: 'center' }}>
               <div style={{
                 fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 'clamp(1.2rem, 2vw, 1.5rem)',
-                fontWeight: 600,
+                fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
+                fontWeight: 500,
                 color: '#C9A84C',
                 lineHeight: 1.2,
-                marginBottom: '0.25rem',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
               }}>
                 {item.title}
-              </div>
-              <div className="hero-trust-subtitle">
-                {item.subtitle}
               </div>
             </div>
           ))}

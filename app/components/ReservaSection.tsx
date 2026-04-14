@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Check, Send, Loader2, Car, CalendarDays, ClipboardList, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
@@ -17,9 +18,9 @@ const vehicles = [
     tag: 'El más solicitado',
     available: true,
     tarifas: [
-      { tipo: 'Bodas: Gran Reserva', precio: '600€' },
-      { tipo: 'Rodajes: Sesión Set', precio: '320€' },
-      { tipo: 'Turismo: Ruta Safor', precio: '200€' },
+      { tipo: 'Servicio de Boda', precio: '600€' },
+      { tipo: 'Servicio de Rodajes y Fotografía', precio: '320€' },
+      { tipo: 'Servicio de Ruta', precio: '200€' },
     ],
   },
   {
@@ -32,9 +33,9 @@ const vehicles = [
     tag: 'El más fotogénico',
     available: true,
     tarifas: [
-      { tipo: 'Bodas: Gran Reserva', precio: '500€' },
-      { tipo: 'Rodajes: Sesión Set', precio: '250€' },
-      { tipo: 'Turismo: Ruta Safor', precio: '160€' },
+      { tipo: 'Servicio de Boda', precio: '500€' },
+      { tipo: 'Servicio de Rodajes y Fotografía', precio: '250€' },
+      { tipo: 'Servicio de Ruta', precio: '160€' },
     ],
   },
   {
@@ -47,9 +48,9 @@ const vehicles = [
     tag: 'El más encantador',
     available: false,
     tarifas: [
-      { tipo: 'Bodas: Gran Reserva', precio: '440€' },
-      { tipo: 'Rodajes: Sesión Set', precio: '200€' },
-      { tipo: 'Turismo: Ruta Safor', precio: '80€' },
+      { tipo: 'Servicio de Boda', precio: '440€' },
+      { tipo: 'Servicio de Rodajes y Fotografía', precio: '200€' },
+      { tipo: 'Servicio de Ruta', precio: '80€' },
     ],
   },
   {
@@ -62,9 +63,9 @@ const vehicles = [
     tag: 'El más alegre',
     available: false,
     tarifas: [
-      { tipo: 'Bodas: Gran Reserva', precio: '350€' },
-      { tipo: 'Rodajes: Sesión Set', precio: '160€' },
-      { tipo: 'Turismo: Ruta Safor', precio: '65€' },
+      { tipo: 'Servicio de Boda', precio: '350€' },
+      { tipo: 'Servicio de Rodajes y Fotografía', precio: '160€' },
+      { tipo: 'Servicio de Ruta', precio: '65€' },
     ],
   },
 ];
@@ -73,18 +74,18 @@ const vehicles = [
 const eventTypes = [
   {
     value: 'bodas',
-    label: 'Bodas & Celebraciones',
-    segments: ['Paquete Único: Gran Reserva', 'Requisitos personalizados (a consultar)'],
+    label: 'Servicio de Boda',
+    segments: ['Servicio de Boda', 'Requisitos personalizados (a consultar)'],
   },
   {
     value: 'turismo',
-    label: 'Turismo & Experiencias',
-    segments: ['Paquete Ruta Safor', 'Requisitos personalizados (a consultar)'],
+    label: 'Servicio de Ruta',
+    segments: ['Servicio de Ruta', 'Requisitos personalizados (a consultar)'],
   },
   {
     value: 'rodajes',
-    label: 'Rodajes & Fotografía',
-    segments: ['Paquete Sesión Set', 'Requisitos personalizados (a consultar)'],
+    label: 'Servicio de Rodajes y Fotografía',
+    segments: ['Servicio de Rodajes y Fotografía', 'Requisitos personalizados (a consultar)'],
   },
   {
     value: 'otro',
@@ -247,6 +248,21 @@ export default function ReservaSection() {
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const vehicleSlug = searchParams.get('v');
+
+  // Auto-selección por parámetro de URL (solo al montar o si cambia el slug)
+  useEffect(() => {
+    if (vehicleSlug) {
+      const vehicle = vehicles.find(v => v.id === vehicleSlug);
+      if (vehicle && vehicle.available) {
+        setSelectedVehicle(vehicle);
+        setStep(1);
+      }
+    }
+  }, [vehicleSlug]); // Se ejecuta solo si el slug en la URL cambia
 
   useEffect(() => {
     if (!selectedVehicle) {
@@ -316,9 +332,9 @@ export default function ReservaSection() {
         
         // Mapeo simple de segmento -> tipo de tarifa
         let lookupType = '';
-        if (formData.tipoEvento === 'bodas') lookupType = 'Bodas: Gran Reserva';
-        else if (formData.tipoEvento === 'turismo') lookupType = 'Turismo: Ruta Safor';
-        else if (formData.tipoEvento === 'rodajes') lookupType = 'Rodajes: Sesión Set';
+        if (formData.tipoEvento === 'bodas') lookupType = 'Servicio de Boda';
+        else if (formData.tipoEvento === 'turismo') lookupType = 'Servicio de Ruta';
+        else if (formData.tipoEvento === 'rodajes') lookupType = 'Servicio de Rodajes y Fotografía';
         
         const priceObj = selectedVehicle.tarifas.find(t => t.tipo === lookupType);
         if (priceObj) currentPrice = priceObj.precio;
@@ -524,7 +540,26 @@ export default function ReservaSection() {
                 <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.58rem', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B5C40', display: 'block', marginBottom: '0.2rem' }}>Vehículo elegido</span>
                 <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.1rem', color: '#C9A84C' }}>{selectedVehicle.name} · {selectedVehicle.year}</span>
               </div>
-              <button onClick={() => { setSelectedVehicle(null); setStep(0); }} style={{ background: 'none', border: '1px solid rgba(77,70,55,0.5)', color: '#6B5C40', cursor: 'pointer', padding: '0.35rem 0.75rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', transition: 'all 0.2s' }}
+              <button 
+                onClick={() => { 
+                  setSelectedVehicle(null); 
+                  setStep(0); 
+                  if (vehicleSlug) {
+                    router.replace('/reserva', { scroll: false });
+                  }
+                }} 
+                style={{ 
+                  background: 'none', 
+                  border: '1px solid rgba(77,70,55,0.5)', 
+                  color: '#6B5C40', 
+                  cursor: 'pointer', 
+                  padding: '0.35rem 0.75rem', 
+                  fontFamily: 'DM Sans, sans-serif', 
+                  fontSize: '0.65rem', 
+                  letterSpacing: '0.1em', 
+                  textTransform: 'uppercase', 
+                  transition: 'all 0.2s' 
+                }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = '#C9A84C'; (e.currentTarget as HTMLElement).style.color = '#C9A84C'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(77,70,55,0.5)'; (e.currentTarget as HTMLElement).style.color = '#6B5C40'; }}>
             Cambiar
@@ -538,7 +573,18 @@ export default function ReservaSection() {
             <BookingCalendar selectedDate={selectedDate} onSelect={setSelectedDate} reservedDates={reservedDates} />
 
             <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-              <button onClick={() => { setSelectedDate(null); setStep(0); }} className="btn-ghost" style={{ padding: '0.75rem 1.5rem', fontSize: '0.75rem' }}>
+              <button 
+                onClick={() => { 
+                  if (vehicleSlug) {
+                    router.push(`/flota/${vehicleSlug}`);
+                  } else {
+                    setSelectedDate(null); 
+                    setStep(0); 
+                  }
+                }} 
+                className="btn-ghost" 
+                style={{ padding: '0.75rem 1.5rem', fontSize: '0.75rem' }}
+              >
                 ← Atrás
               </button>
               <button disabled={!selectedDate} onClick={() => setStep(2)} className="btn-primary" style={{ padding: '0.75rem 1.75rem', fontSize: '0.75rem', opacity: selectedDate ? 1 : 0.4, cursor: selectedDate ? 'pointer' : 'not-allowed' }}>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -161,6 +162,19 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         {children}
+        <Script
+          id="bfcache-buster"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                  window.location.reload();
+                }
+              });
+            `,
+          }}
+        />
       </body>
     </html>
   );

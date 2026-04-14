@@ -1,226 +1,252 @@
+'use client';
+
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { Check, ArrowLeft, ChevronRight } from 'lucide-react';
 import { vehicles } from '../../lib/data';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import WhatsAppFloat from '../../components/WhatsAppFloat';
-import type { Metadata } from 'next';
+import { ChevronLeft, Calendar, ShieldCheck, User, Gauge, Info, CreditCard } from 'lucide-react';
 
-type Props = { params: Promise<{ slug: string }> };
+export default function VehiclePage() {
+  const { slug } = useParams();
+  const router = useRouter();
+  const vehicle = vehicles.find((v) => v.id === slug);
 
-export function generateStaticParams() {
-  return vehicles.map((v) => ({ slug: v.slug }));
-}
+  if (!vehicle) {
+    return (
+      <div style={{ background: '#000', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#E8D5A3' }}>
+        <p>Vehículo no encontrado.</p>
+        <Link href="/#flota">Volver</Link>
+      </div>
+    );
+  }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const vehicle = vehicles.find((v) => v.slug === slug);
-  if (!vehicle) return {};
-  return {
-    title: `${vehicle.name} ${vehicle.year} — Forner Classics`,
-    description: `Alquiler del ${vehicle.name} (${vehicle.year}) con chófer en Gandía, Valencia. ${vehicle.description.slice(0, 140)}...`,
+  const handleBack = () => {
+    router.back();
   };
-}
-
-export default async function VehicleDetailPage({ params }: Props) {
-  const { slug } = await params;
-  const vehicle = vehicles.find((v) => v.slug === slug);
-  if (!vehicle) notFound();
 
   return (
     <>
       <Navbar />
-      <main style={{ background: '#000', paddingTop: '80px' }}>
+      <main style={{ background: '#000', minHeight: '100vh', paddingTop: '80px' }}>
+        
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1.25rem' }}>
+          
+          {/* Back Button */}
+          <button 
+            onClick={handleBack}
+            style={{
+              background: 'none', border: 'none', color: '#C9A84C', 
+              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem',
+              fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', textTransform: 'uppercase',
+              letterSpacing: '0.15em', marginBottom: '2rem'
+            }}
+          >
+            <ChevronLeft size={16} /> Volver a la selección
+          </button>
 
-        {/* Hero Image */}
-        <div style={{ position: 'relative', width: '100%', height: '60vh', overflow: 'hidden' }}>
-          <Image
-            src={vehicle.image}
-            alt={vehicle.imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
-          />
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.5) 100%)',
-          }} />
-
-          {/* Badge */}
-          <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 2 }}>
-            <span className="badge-gold" style={{ fontSize: '0.7rem', padding: '0.3rem 0.8rem' }}>{vehicle.badge}</span>
-          </div>
-
-          {/* Bottom info */}
-          <div style={{
-            position: 'absolute', bottom: '2rem', left: '2rem', right: '2rem', zIndex: 2,
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+            gap: '4rem',
+            alignItems: 'start'
           }}>
-            <span style={{
-              fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(3rem, 8vw, 5rem)',
-              fontWeight: 700,
-              color: 'rgba(232,213,163,0.8)',
-              lineHeight: 1,
-              display: 'block',
-              textShadow: '0 4px 20px rgba(0,0,0,0.6)',
-            }}>{vehicle.year}</span>
-            <span style={{
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: '0.75rem',
-              color: '#fff',
-              letterSpacing: '0.15em',
-              textShadow: '0 2px 6px rgba(0,0,0,0.8)',
-            }}>{vehicle.era.toUpperCase()} · {vehicle.color} · {vehicle.pax}</span>
+            
+            {/* LEFT SIDE: Information */}
+            <div style={{ order: 1 }}>
+              <div style={{ marginBottom: '2.5rem' }}>
+                <span className="badge-gold" style={{ marginBottom: '1rem', display: 'inline-block' }}>{vehicle.year}</span>
+                <h1 style={{ 
+                  fontFamily: 'Cormorant Garamond, serif', 
+                  fontSize: 'clamp(2.5rem, 5vw, 4rem)', 
+                  fontWeight: 300, 
+                  color: '#E8D5A3',
+                  lineHeight: 1.1,
+                  marginBottom: '1.5rem'
+                }}>
+                  {vehicle.name}
+                </h1>
+                <p style={{ 
+                  fontFamily: 'DM Sans, sans-serif', 
+                  fontSize: '1rem', 
+                  color: '#A09070', 
+                  lineHeight: 1.8,
+                  marginBottom: '2rem'
+                }}>
+                  {vehicle.description}
+                </p>
+
+                {/* Dynamic Features List */}
+                {vehicle.features && vehicle.features.length > 0 && (
+                  <div style={{ marginBottom: '2.5rem' }}>
+                    <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.4rem', color: '#E8D5A3', fontWeight: 400, marginBottom: '1rem' }}>Incluye</h3>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                      {vehicle.features.map((feature: string, idx: number) => (
+                        <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                          <div style={{ width: '6px', height: '6px', background: '#C9A84C', transform: 'rotate(45deg)', marginTop: '8px', flexShrink: 0 }} />
+                          <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: '#A09070', lineHeight: 1.6 }}>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+              </div>
+
+              {/* PRICING SECTION */}
+              <div style={{ marginBottom: '3rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                  <CreditCard size={20} color="#C9A84C" />
+                  <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.5rem', color: '#E8D5A3', fontWeight: 400, margin: 0 }}>Tarifas de Alquiler</h3>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {vehicle.tarifas?.map((tarifa: any, idx: number) => (
+                    <PriceBox 
+                      key={idx}
+                      title={tarifa.tipo} 
+                      price={tarifa.precio} 
+                    />
+                  ))}
+                </div>
+                
+                <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.5rem', color: '#6B5C40', fontSize: '0.8rem' }}>
+                  <Info size={14} style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <p>Todos los servicios incluyen chófer uniformado y seguro de responsabilidad civil.</p>
+                </div>
+              </div>
+
+              {/* CTAs */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.25rem' }}>
+                <Link 
+                  href={`/reserva?v=${vehicle.id}`}
+                  className="btn-primary"
+                  style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minWidth: '200px' }}
+                >
+                  Confirmar Reserva
+                </Link>
+              </div>
+            </div>
+
+            {/* RIGHT SIDE: Image (More contained) */}
+            <div style={{ order: 2, position: 'sticky', top: '120px' }}>
+              <div style={{ 
+                position: 'relative', 
+                width: '100%', 
+                height: '450px', 
+                background: '#0a0a0a',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+                border: '1px solid rgba(201,168,76,0.1)'
+              }}>
+                <Image
+                  src={vehicle.image}
+                  alt={vehicle.imageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              
+              {/* Decorative text below image */}
+              <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                <p style={{ 
+                  fontFamily: 'Cormorant Garamond, serif', 
+                  fontStyle: 'italic', 
+                  color: '#C9A84C', 
+                  fontSize: '1.1rem' 
+                }}>
+                  &ldquo;La elegancia de lo atemporal en cada detalle.&rdquo;
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        {/* Content */}
-        <div className="container-luxury" style={{ padding: '3rem 1.5rem 5rem' }}>
-
-          {/* Breadcrumb */}
-          <div style={{ marginBottom: '2rem' }}>
-            <Link href="/#flota" style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-              fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', color: '#6B5C40',
-              textDecoration: 'none', transition: 'color 0.2s',
-            }}>
-              <ArrowLeft size={14} /> Volver a la Flota
-            </Link>
-          </div>
-
-          {/* Name */}
-          <h1 style={{
-            fontFamily: 'Cormorant Garamond, serif',
-            fontSize: 'clamp(2rem, 5vw, 3.2rem)',
-            fontWeight: 300,
-            color: '#E8D5A3',
-            letterSpacing: '0.04em',
-            marginBottom: '0.5rem',
-            textTransform: 'uppercase',
-          }}>{vehicle.name}</h1>
-
-          <div style={{ height: '1px', width: '60px', background: '#C9A84C', marginBottom: '2rem' }} />
-
-          {/* Description */}
-          <p style={{
-            fontFamily: 'DM Sans, sans-serif',
-            fontSize: '1rem',
-            color: '#A09070',
-            lineHeight: 1.85,
-            marginBottom: '2.5rem',
-            maxWidth: '700px',
-            fontStyle: 'italic',
-          }}>{vehicle.description}</p>
-
-          {/* Two column: Features + Ideal For */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', marginBottom: '3rem' }} className="historia-grid">
-
-            {/* Features */}
-            <div>
-              <h2 style={{
-                fontFamily: 'DM Sans, sans-serif',
-                fontSize: '0.65rem',
-                fontWeight: 600,
-                letterSpacing: '0.25em',
-                color: '#C9A84C',
-                textTransform: 'uppercase',
-                marginBottom: '1rem',
-              }}>Características</h2>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                {vehicle.features.map((f) => (
-                  <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem' }}>
-                    <Check size={14} color="#C9A84C" style={{ flexShrink: 0, marginTop: '3px' }} />
-                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: '#C5B484', lineHeight: 1.5 }}>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Ideal For */}
-            <div style={{
-              padding: '1rem 1.25rem',
-              background: 'rgba(201,168,76,0.05)',
-              borderLeft: '2px solid #C9A84C',
-            }}>
-              <strong style={{
-                display: 'block', color: '#C9A84C',
-                letterSpacing: '0.15em', textTransform: 'uppercase',
-                fontSize: '0.6rem', marginBottom: '0.4rem',
-                fontFamily: 'DM Sans, sans-serif',
-              }}>Ideal para</strong>
-              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', color: '#A09070' }}>
-                {vehicle.idealFor}
-              </span>
-            </div>
-          </div>
-
-          {/* Pricing Table */}
-          <div style={{
-            border: '1px solid rgba(77,70,55,0.4)',
-            overflow: 'hidden',
-            marginBottom: '2.5rem',
-            maxWidth: '550px',
-          }}>
-            <div style={{
-              padding: '0.7rem 1.25rem',
-              background: 'rgba(201,168,76,0.06)',
-              borderBottom: '1px solid rgba(77,70,55,0.4)',
-            }}>
-              <span style={{
-                fontFamily: 'DM Sans, sans-serif',
-                fontSize: '0.6rem', fontWeight: 600,
-                letterSpacing: '0.25em', color: '#C9A84C',
-                textTransform: 'uppercase',
-              }}>Tarifas por tipo de servicio</span>
-            </div>
-            {vehicle.tarifas.map((t, i) => (
-              <Link
-                key={t.tipo}
-                href={`/servicios/${t.tipo.includes('Bodas') ? 'bodas' : t.tipo.includes('Rodajes') ? 'rodajes' : 'turismo'}`}
-                style={{
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '0.85rem 1.25rem', textDecoration: 'none',
-                  borderBottom: i < vehicle.tarifas.length - 1 ? '1px solid rgba(77,70,55,0.25)' : 'none',
-                  transition: 'background-color 0.2s',
-                }}
-              >
-                <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', color: '#A09070', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  {t.tipo} <ChevronRight size={12} color="#6B5C40" />
-                </span>
-                <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.3rem', fontWeight: 500, color: '#C9A84C' }}>{t.precio}</span>
-              </Link>
-            ))}
-          </div>
-
-          {/* CTA */}
-          {vehicle.available ? (
-            <Link href="/reserva" className="btn-primary" style={{ display: 'inline-block', textDecoration: 'none', textAlign: 'center' }}>
-              Reservar este vehículo
-            </Link>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '400px' }}>
-              <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.8rem', color: '#6B5C40', lineHeight: 1.6 }}>
-                Este vehículo se incorporará a la flota en breve. Únase a la lista de espera.
-              </p>
-              <a
-                href={`https://wa.me/34601329162?text=${encodeURIComponent(`Hola, me interesa reservar el ${vehicle.name} (${vehicle.year}) cuando esté disponible.`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost"
-                style={{ textAlign: 'center', fontSize: '0.8rem' }}
-              >
-                Notificarme cuando esté disponible
-              </a>
-            </div>
-          )}
-        </div>
       </main>
       <Footer />
       <WhatsAppFloat />
+
+      <style jsx global>{`
+        .btn-primary {
+          background: #C9A84C;
+          color: #000;
+          padding: 1.1rem 2rem;
+          font-family: 'DM Sans', sans-serif;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          border: none;
+          transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+          cursor: pointer;
+        }
+        .btn-primary:hover {
+          background: #E8D5A3;
+          transform: translateY(-3px);
+          box-shadow: 0 12px 24px rgba(201,168,76,0.25);
+        }
+        .btn-ghost {
+          background: transparent;
+          color: #C9A84C;
+          padding: 1.1rem 2rem;
+          font-family: 'DM Sans', sans-serif;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          border: 1px solid rgba(201,168,76,0.4);
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+        .btn-ghost:hover {
+          border-color: #E8D5A3;
+          color: #E8D5A3;
+          background: rgba(201,168,76,0.02);
+        }
+        .badge-gold {
+          background: rgba(201,168,76,0.1);
+          color: #C9A84C;
+          padding: 0.4rem 0.8rem;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.7rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          border: 1px solid rgba(201,168,76,0.2);
+          border-radius: 4px;
+        }
+      `}</style>
     </>
+  );
+}
+
+function SpecItem({ icon, label, value }: { icon: React.ReactNode, label: string, value: string }) {
+  return (
+    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+      <div style={{ color: '#C9A84C' }}>{icon}</div>
+      <div>
+        <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.6rem', color: '#6B5C40', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1px' }}>{label}</div>
+        <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', color: '#E8D5A3', fontWeight: 500 }}>{value}</div>
+      </div>
+    </div>
+  );
+}
+
+function PriceBox({ title, price }: { title: string, price: string }) {
+  return (
+    <div style={{ 
+      padding: '1.25rem', 
+      border: '1px solid rgba(201,168,76,0.15)', 
+      borderRadius: '8px',
+      background: 'linear-gradient(to right, rgba(201,168,76,0.02), transparent)'
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <h4 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '1rem', color: '#E8D5A3', margin: 0, fontWeight: 500 }}>{title}</h4>
+        <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.4rem', color: '#C9A84C', fontWeight: 600 }}>Desde {price}</span>
+      </div>
+    </div>
   );
 }

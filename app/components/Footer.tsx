@@ -26,8 +26,9 @@ export default function Footer() {
             {/* Logo */}
             <div style={{ marginBottom: '2rem' }}>
               <Image
-                src="/images/logo-principal.png.jpg"
+                src="/images/logo-principal.png"
                 alt="Forner Classics Sello Oficial"
+                unoptimized
                 width={120}
                 height={120}
                 style={{
@@ -130,7 +131,7 @@ export default function Footer() {
               {[
                 { label: 'La Flota', href: '#flota' },
                 { label: 'Servicios', href: '#servicios' },
-                { label: 'Nuestra Historia', href: '#historia' },
+                { label: 'Nosotros', href: '#historia' },
 
                 { label: 'Solicitar Reserva', href: '#reserva' },
               ].map((link) => (
@@ -172,9 +173,9 @@ export default function Footer() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[
-                'Bodas & Celebraciones',
-                'Turismo & Experiencias',
-                'Rodajes & Fotografía',
+                'Servicio de Boda',
+                'Servicio de Ruta',
+                'Servicio de Rodajes y Fotografía',
               ].map((s) => (
                 <span key={s} style={{
                   fontFamily: 'DM Sans, sans-serif',
