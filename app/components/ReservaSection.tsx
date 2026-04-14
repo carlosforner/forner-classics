@@ -347,6 +347,8 @@ export default function ReservaSection() {
           telefono: formData.telefono,
           segmento: formData.segmento,
           precio: currentPrice,
+          hora_inicio: formData.horaInicio,
+          hora_fin: formData.horaFin,
           estado: 'pendiente'
         }]);
 
