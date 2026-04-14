@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const { nombre, email, telefono, vehiculo, fecha, fechaRaw, segmento, precio, mensaje } = await req.json();
+    const { nombre, email, telefono, vehiculo, fecha, fechaLocal, horaInicio, horaFin, segmento, precio, mensaje } = await req.json();
     console.log("📨 [API Sync] Iniciando flujo para:", email);
 
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -16,19 +16,8 @@ export async function POST(req: Request) {
           ? Number(precio.replace(/[^0-9,.]/g, '').replace(',', '.')) 
           : Number(precio);
 
-        let fechaISO = new Date().toISOString().split('T')[0];
-        try {
-          if (fechaRaw) {
-            fechaISO = fechaRaw.split('T')[0];
-          } else {
-            const d = new Date(fecha);
-            if (!isNaN(d.getTime())) {
-              fechaISO = d.toISOString().split('T')[0];
-            }
-          }
-        } catch (e) {
-          console.warn("⚠️ [API Notion] No se pudo parsear la fecha, usando fecha actual.");
-        }
+        // Priorizamos fechaLocal (YYYY-MM-DD) enviada por el cliente para evitar saltos de zona horaria
+        let fechaISO = fechaLocal || new Date().toISOString().split('T')[0];
 
         console.log("📝 [API Notion] Sincronizando:", { nombre, email, vehiculo, fechaISO, precioLimpio });
 
@@ -47,6 +36,8 @@ export async function POST(req: Request) {
               'Teléfono': { phone_number: telefono || '' },
               'Vehículo': { select: { name: vehiculo || 'Sin vehículo' } },
               'Fecha Evento': { date: { start: fechaISO } },
+              'Hora Inicio': { rich_text: [{ text: { content: horaInicio || '' } }] },
+              'Hora Fin': { rich_text: [{ text: { content: horaFin || '' } }] },
               'Segmento': { select: { name: segmento || 'Turismo' } },
               'Precio': { number: isNaN(precioLimpio) ? 0 : precioLimpio },
               'Mensaje': { rich_text: [{ text: { content: mensaje || '' } }] }

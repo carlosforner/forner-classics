@@ -379,7 +379,9 @@ export default function ReservaSection() {
               telefono: formData.telefono,
               vehiculo: selectedVehicle.name,
               fecha: fechaStr,
-              fechaRaw: selectedDate.toISOString(),
+              fechaLocal: isoDate.split('T')[0], // Enviamos solo la fecha local YYYY-MM-DD
+              horaInicio: formData.horaInicio,
+              horaFin: formData.horaFin,
               segmento: formData.segmento,
               precio: currentPrice,
               mensaje: formData.notas
