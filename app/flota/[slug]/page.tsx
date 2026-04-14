@@ -24,7 +24,7 @@ export default function VehiclePage() {
   }
 
   const handleBack = () => {
-    router.back();
+    router.push('/#flota');
   };
 
   return (
