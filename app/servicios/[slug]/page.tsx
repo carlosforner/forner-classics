@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Check, ArrowLeft, Info, MapPin } from 'lucide-react';
+import { Check, ChevronLeft, Info, MapPin } from 'lucide-react';
 import { services, UNAVAILABLE_VEHICLES } from '../../lib/data';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -57,20 +57,10 @@ export default async function ServiceDetailPage({ params }: Props) {
           {/* Back button */}
           <Link
             href="/#servicios"
-            style={{
-              position: 'absolute', top: '8.5rem', left: '2rem', zIndex: 10,
-              background: '#C9A84C', border: '1px solid #C9A84C',
-              color: '#1A1200',
-              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-              fontFamily: 'DM Sans, sans-serif', fontSize: '0.7rem',
-              fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.15em',
-              padding: '0.6rem 1.25rem', textDecoration: 'none',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-            }}
+            className="btn-back-gold"
+            style={{ position: 'absolute', top: '8.5rem', left: '2rem', zIndex: 10 }}
           >
-            <ArrowLeft size={16} /> Volver a Servicios
+            <ChevronLeft size={16} /> Volver a servicios
           </Link>
 
           {/* Hero text */}

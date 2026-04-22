@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Plus, Minus, ArrowLeft, MessageCircle } from 'lucide-react';
+import { Plus, Minus, ChevronLeft, MessageCircle } from 'lucide-react';
 import { faqs } from '../lib/data';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -20,16 +20,7 @@ export default function FaqPage() {
 
             {/* Back link */}
             <div style={{ marginBottom: '3rem' }}>
-              <Link href="/" style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                fontFamily: 'DM Sans, sans-serif', fontSize: '0.7rem',
-                fontWeight: 700,
-                letterSpacing: '0.15em', textTransform: 'uppercase',
-                background: '#C9A84C', color: '#1A1200',
-                padding: '0.6rem 1.25rem', textDecoration: 'none',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                transition: 'all 0.3s ease',
-              }}>
+              <Link href="/" className="btn-back-gold">
                 <ArrowLeft size={16} /> Volver al inicio
               </Link>
             </div>

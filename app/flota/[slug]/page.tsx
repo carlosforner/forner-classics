@@ -57,27 +57,8 @@ export default function VehiclePage() {
           {/* Back button */}
           <Link
             href="/#flota"
-            style={{
-              position: 'absolute', top: '8.5rem', left: '2rem', zIndex: 10,
-              background: '#C9A84C', border: '1px solid #C9A84C',
-              color: '#1A1200', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', gap: '0.5rem',
-              fontFamily: 'DM Sans, sans-serif', fontSize: '0.7rem',
-              fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.15em',
-              padding: '0.6rem 1.25rem',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-              textDecoration: 'none',
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.background = '#E8D5A3';
-              (e.currentTarget as HTMLElement).style.borderColor = '#E8D5A3';
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.background = '#C9A84C';
-              (e.currentTarget as HTMLElement).style.borderColor = '#C9A84C';
-            }}
+            className="btn-back-gold"
+            style={{ position: 'absolute', top: '8.5rem', left: '2rem', zIndex: 10 }}
           >
             <ChevronLeft size={16} /> Volver a la colección
           </Link>
@@ -90,15 +71,7 @@ export default function VehiclePage() {
             margin: '0 auto',
           }}>
             <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 1.25rem' }}>
-              <span style={{
-                display: 'inline-block',
-                fontFamily: 'DM Sans, sans-serif', fontSize: '0.6rem', fontWeight: 700,
-                letterSpacing: '0.3em', textTransform: 'uppercase',
-                background: '#C9A84C', color: '#1A1200',
-                padding: '0.25rem 0.75rem', marginBottom: '1rem',
-              }}>
-                {vehicle.badge} · {vehicle.era}
-              </span>
+
               <h1 style={{
                 fontFamily: 'Cormorant Garamond, serif',
                 fontSize: 'clamp(2.5rem, 6vw, 5rem)',

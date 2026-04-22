@@ -94,11 +94,6 @@ export default function FlotaSection() {
                     pointerEvents: 'none',
                   }} />
 
-                  {/* Badge */}
-                  <div style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', zIndex: 2 }}>
-                    <span className="badge-gold" style={{ fontSize: '0.6rem', padding: '0.2rem 0.65rem' }}>{vehicle.badge}</span>
-                  </div>
-
                   {/* Type Tag */}
                   <div style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', zIndex: 2 }}>
                     <span style={{

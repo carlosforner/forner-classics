@@ -252,6 +252,65 @@ p { color: var(--text-muted); line-height: 1.8; }
 
 .btn-text-link:hover { gap: 0.7rem; color: var(--gold-light); }
 
+/* ── Gold Back Button (Communal) ── */
+.btn-back-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: #1A1200;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.6rem 1.25rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-back-gold:hover {
+  background: var(--cream);
+  border-color: var(--cream);
+}
+
+@media (max-width: 640px) {
+  .btn-back-gold {
+    font-size: 0.62rem;
+    padding: 0.5rem 1rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+.btn-step-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: #1A1200;
+  padding: 0.75rem 1.75rem; 
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .btn-step-back {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.62rem;
+  }
+}
+
 /* ── Cards ── */
 .card-luxury {
   background: var(--surface-card);

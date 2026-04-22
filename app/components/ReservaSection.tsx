@@ -417,16 +417,7 @@ export default function ReservaSection() {
 
         {/* Back Link */}
         <div style={{ marginBottom: '3.5rem' }}>
-          <a href="/" style={{
-            display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-            fontFamily: 'DM Sans, sans-serif', fontSize: '0.7rem',
-            fontWeight: 700,
-            letterSpacing: '0.15em', textTransform: 'uppercase',
-            background: '#C9A84C', color: '#1A1200',
-            padding: '0.6rem 1.25rem', textDecoration: 'none',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-            transition: 'all 0.3s ease',
-          }}>
+          <a href="/" className="btn-back-gold">
             <ChevronLeft size={16} /> Volver al inicio
           </a>
         </div>
@@ -602,15 +593,7 @@ export default function ReservaSection() {
                     setStep(0); 
                   }
                 }} 
-                style={{ 
-                  background: '#C9A84C', border: '1px solid #C9A84C',
-                  color: '#1A1200', padding: '0.75rem 1.75rem', 
-                  fontSize: '0.72rem', fontWeight: 700,
-                  fontFamily: 'DM Sans, sans-serif',
-                  textTransform: 'uppercase', letterSpacing: '0.1em',
-                  cursor: 'pointer', transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                }}
+                className="btn-step-back"
               >
                 ← Atrás
               </button>
@@ -765,15 +748,7 @@ export default function ReservaSection() {
                 <button 
                   type="button" 
                   onClick={() => setStep(1)} 
-                  style={{ 
-                    background: '#C9A84C', border: '1px solid #C9A84C',
-                    color: '#1A1200', padding: '0.75rem 1.75rem', 
-                    fontSize: '0.72rem', fontWeight: 700,
-                    fontFamily: 'DM Sans, sans-serif',
-                    textTransform: 'uppercase', letterSpacing: '0.1em',
-                    cursor: 'pointer', transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                  }}
+                  className="btn-step-back"
                 >
                   ← Atrás
                 </button>

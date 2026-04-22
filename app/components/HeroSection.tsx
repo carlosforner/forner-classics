@@ -70,16 +70,16 @@ export default function HeroSection() {
           style={{
             objectFit: 'cover',
             objectPosition: 'center 70%',
-            filter: 'brightness(0.65) contrast(1.05)',
+            filter: 'brightness(0.5) contrast(1.1)',
           }}
         />
       </motion.div>
 
-      {/* Static Vignette Layer */}
+      {/* Static Vignette Layer - More aggressive for legibility */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 45%, rgba(0,0,0,0.85) 100%)',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 45%, rgba(0,0,0,0.9) 100%)',
         zIndex: 2,
         pointerEvents: 'none',
       }} />
