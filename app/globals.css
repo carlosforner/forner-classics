@@ -28,7 +28,7 @@
   --font-sans: 'DM Sans', system-ui, sans-serif;
 
   /* Spacing */
-  --section-gap: 6rem;
+  --section-gap: 7rem;
   --container-pad: 1.25rem;
 }
 
@@ -89,14 +89,14 @@ h1, h2, h3 {
   font-family: var(--font-serif);
   color: var(--cream);
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
 }
 
 h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 300; }
 h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; }
-h3 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 400; }
+h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 400; }
 
-p { color: var(--text-secondary); line-height: 1.75; }
+p { color: var(--text-muted); line-height: 1.8; }
 
 /* ── Gold Gradient Text ── */
 .text-gold { color: var(--gold); }
@@ -255,13 +255,14 @@ p { color: var(--text-secondary); line-height: 1.75; }
 /* ── Cards ── */
 .card-luxury {
   background: var(--surface-card);
-  border: 1px solid rgba(77, 70, 55, 0.4);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(77, 70, 55, 0.25);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.25,0.1,0.25,1);
 }
 
 .card-luxury:hover {
-  border-color: rgba(201, 168, 76, 0.3);
-  box-shadow: 0 0 40px rgba(201, 168, 76, 0.06);
+  border-color: rgba(201, 168, 76, 0.35);
+  box-shadow: 0 12px 50px rgba(0,0,0,0.4), 0 0 30px rgba(201, 168, 76, 0.06);
+  transform: translateY(-5px);
 }
 
 /* ── Form Inputs ── */
@@ -327,12 +328,12 @@ p { color: var(--text-secondary); line-height: 1.75; }
 .section-label {
   display: block;
   font-family: var(--font-sans);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 600;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1rem;
+  color: rgba(201,168,76,0.7);
+  margin-bottom: 0.85rem;
 }
 
 /* ── WhatsApp Float Button ── */

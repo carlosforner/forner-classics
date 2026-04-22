@@ -1,18 +1,42 @@
 'use client';
 
 import Image from 'next/image';
-import { ChevronDown } from 'lucide-react';
+import Link from 'next/link';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
+const MotionLink = motion(Link);
 
 export default function HeroSection() {
-  const scrollToFlota = () => {
-    const el = document.querySelector('#flota');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [isHoveringButton, setIsHoveringButton] = useState(false);
 
-  const scrollToReserva = () => {
-    const el = document.querySelector('#reserva');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth springs for the parallax
+  const springX = useSpring(mouseX, { stiffness: 60, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 60, damping: 20 });
+
+  // Subtle parallax mapping (reduced range to avoid showing edges with less zoom)
+  const imageX = useTransform(springX, [0, 1920], [10, -10]);
+  const imageY = useTransform(springY, [0, 1080], [10, -10]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    // Set initial position to center
+    mouseX.set(window.innerWidth / 2);
+    mouseY.set(window.innerHeight / 2);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [mouseX, mouseY]);
 
   return (
     <section
@@ -27,184 +51,216 @@ export default function HeroSection() {
         overflow: 'hidden',
       }}
     >
-      {/* Background image — Next.js optimized for LCP */}
-      <div style={{ position: 'absolute', inset: 0 }}>
+      {/* Background with subtle Parallax and no extra scale/zoom */}
+      <motion.div 
+        style={{ 
+          position: 'absolute', 
+          inset: '-20px', // Small overflow just for the subtle movement
+          x: imageX,
+          y: imageY,
+        }}
+      >
         <Image
           src="/images/hero-principal.jpg.png"
-          alt="Forner Classics - Coches clásicos históricos en villa mediterránea"
+          alt="Forner Classics — Coches clásicos con chófer en Gandía"
           fill
           priority
-          quality={85}
+          quality={95}
           sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center 70%' }}
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center 70%',
+            filter: 'brightness(0.65) contrast(1.05)',
+          }}
         />
-      </div>
+      </motion.div>
 
-      {/* Dark gradient overlay */}
+      {/* Static Vignette Layer */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.85) 100%)',
-        zIndex: 1,
-      }} />
-
-      {/* Left side scrim for text legibility */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        background: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 70%)',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 45%, rgba(0,0,0,0.85) 100%)',
         zIndex: 2,
+        pointerEvents: 'none',
       }} />
 
-      {/* Art Déco geometric border overlay */}
+      {/* Art Déco frame */}
       <div style={{
         position: 'absolute',
-        inset: '2rem',
-        border: '1px solid rgba(201,168,76,0.15)',
+        top: '2rem', right: '2rem', bottom: '2rem', left: '2rem',
         pointerEvents: 'none',
-        zIndex: 1,
+        zIndex: 3,
+        boxShadow: 'inset 0 0 0 1px rgba(201,168,76,0.08)',
       }} />
-
-      {/* Corner accents */}
-      {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos) => (
-        <div key={pos} aria-hidden="true" style={{
-          position: 'absolute',
-          top: pos.includes('top') ? '2.5rem' : 'auto',
-          bottom: pos.includes('bottom') ? '2.5rem' : 'auto',
-          left: pos.includes('left') ? '2.5rem' : 'auto',
-          right: pos.includes('right') ? '2.5rem' : 'auto',
-          width: '32px',
-          height: '32px',
-          borderTop: pos.includes('top') ? '1.5px solid #C9A84C' : 'none',
-          borderBottom: pos.includes('bottom') ? '1.5px solid #C9A84C' : 'none',
-          borderLeft: pos.includes('left') ? '1.5px solid #C9A84C' : 'none',
-          borderRight: pos.includes('right') ? '1.5px solid #C9A84C' : 'none',
-          zIndex: 2,
-          pointerEvents: 'none',
-        }} />
-      ))}
 
       {/* Content */}
-      <div className="container-luxury hero-content">
-
-        {/* Section label */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-          <div style={{ height: '1px', width: '40px', background: 'var(--gold)' }} />
-          <span className="hero-location">
-            Gandía · La Safor · Valencia
-          </span>
-        </div>
-
-        {/* Main headline */}
-        <h1
-          className="hero-text-overlay"
-          style={{
-            fontFamily: 'Cormorant Garamond, serif',
-            fontSize: 'clamp(2.8rem, 9vw, 6rem)',
-            fontWeight: 300,
-            lineHeight: 1.05,
-            color: '#E8D5A3',
-            letterSpacing: '-0.02em',
-            maxWidth: '800px',
-            marginBottom: '1.5rem',
-          }}
-        >
-          <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', borderWidth: 0 }}>Alquiler de Coches Clásicos en Gandía y Valencia. </span>
-          Alquiler de{' '}
-          <span style={{
-            fontStyle: 'italic',
-            color: '#C9A84C',
-          }}>coches clásicos</span>
-        </h1>
-
-        {/* Art Déco divider */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', maxWidth: '400px' }}>
-          <div style={{ height: '1px', flex: 1, background: 'linear-gradient(90deg, var(--gold), transparent)' }} />
-          <div style={{ width: '6px', height: '6px', background: '#C9A84C', transform: 'rotate(45deg)', flexShrink: 0 }} />
-          <div style={{ height: '1px', flex: 1, background: 'linear-gradient(90deg, transparent, var(--gold))' }} />
-        </div>
-
-        {/* Subheadline */}
-        <p style={{
-          fontFamily: 'DM Sans, sans-serif',
-          fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-          fontWeight: 300,
-          color: '#C5B484',
-          maxWidth: '560px',
-          lineHeight: 1.75,
-          marginBottom: '3rem',
-        }}>
-          Ofrecemos <strong style={{ color: '#E8D5A3', fontWeight: 500 }}>servicios con conductor para bodas, turismos y rodajes</strong>. Experiencias irrepetibles en vehículos históricos para momentos que merecen un marco a la altura.
-        </p>
-
-        {/* CTAs */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '4rem' }}>
-          <button onClick={scrollToReserva} className="btn-primary" id="hero-cta-reservar">
-            Solicitar Reserva
-          </button>
-          <button onClick={scrollToFlota} className="btn-ghost" id="hero-cta-flota">
-            Descubrir la Flota
-          </button>
-        </div>
-
-        {/* Trust Bar */}
-        <div className="hero-trust-bar" style={{ justifyContent: 'center', gap: '4rem' }}>
-          {[
-            { title: 'Clásicos Originales' },
-            { title: 'Chófer Uniformado' },
-            { title: 'Profesionalidad' },
-          ].map((item) => (
-            <div key={item.title} style={{ textAlign: 'center' }}>
-              <div style={{
-                fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
-                fontWeight: 500,
-                color: '#C9A84C',
-                lineHeight: 1.2,
-                letterSpacing: '0.05em',
-                textTransform: 'uppercase',
-              }}>
-                {item.title}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
       <div
-        onClick={scrollToFlota}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && scrollToFlota()}
-        aria-label="Desplazarse a la sección de flota"
-        className="hero-scroll-indicator"
+        className="container-luxury hero-content"
         style={{
-          position: 'absolute',
-          bottom: '2.5rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          position: 'relative',
+          zIndex: 10,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '0.5rem',
-          cursor: 'pointer',
-          zIndex: 3,
-          animation: 'float 2.5s ease-in-out infinite',
+          justifyContent: 'center',
+          textAlign: 'center',
+          width: '100%',
+          minHeight: '100svh',
+          paddingBottom: '5rem',
         }}
       >
-        <span style={{
-          fontFamily: 'DM Sans, sans-serif',
-          fontSize: '0.6rem',
-          letterSpacing: '0.3em',
-          color: '#6B5C40',
-          textTransform: 'uppercase',
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '2rem',
+          marginTop: '-8vh',
         }}>
-          Explorar
-        </span>
-        <ChevronDown size={16} color="#C9A84C" />
-      </div>
+          {/* Logo */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
+            style={{ position: 'relative', width: 'clamp(220px, 30vw, 440px)', height: '120px' }}
+          >
+            <Image
+              src="/images/logo-principal.png"
+              alt="Forner Classics"
+              fill
+              style={{ objectFit: 'contain' }}
+              priority
+            />
+          </motion.div>
 
+          <motion.div
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
+            style={{
+              height: '1px',
+              width: 'clamp(60px, 12vw, 120px)',
+              background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.6), transparent)',
+              transformOrigin: 'center',
+            }}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.8 }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}
+          >
+            <h1 style={{
+              fontFamily: 'Cormorant Garamond, serif',
+              fontSize: 'clamp(0.85rem, 1.8vw, 1.2rem)',
+              fontWeight: 400,
+              color: '#E8D5A3',
+              letterSpacing: '0.5em',
+              textTransform: 'uppercase',
+              margin: 0,
+              textShadow: '0 2px 20px rgba(0,0,0,0.9)',
+            }}>
+              Alquiler de Coches Clásicos
+            </h1>
+
+            <p style={{
+              fontFamily: 'Cormorant Garamond, serif',
+              fontSize: 'clamp(0.62rem, 1.1vw, 0.78rem)',
+              fontWeight: 300,
+              color: 'rgba(201,168,76,0.75)',
+              letterSpacing: '0.4em',
+              textTransform: 'uppercase',
+              margin: 0,
+            }}>
+              Con chófer incluido · Gandía
+            </p>
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.1 }}
+            style={{ marginTop: '0.75rem' }}
+          >
+            <MotionLink
+              href="/reserva"
+              onMouseEnter={() => setIsHoveringButton(true)}
+              onMouseLeave={() => setIsHoveringButton(false)}
+              whileHover={{
+                scale: 1.04,
+                borderColor: 'rgba(201,168,76,0.9)',
+                boxShadow: '0 0 40px rgba(201,168,76,0.2), inset 0 0 20px rgba(201,168,76,0.05)',
+              }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                position: 'relative',
+                background: 'rgba(0,0,0,0.35)',
+                border: '1px solid rgba(201,168,76,0.4)',
+                color: '#E8D5A3',
+                padding: '0.85rem 3rem',
+                fontSize: '0.7rem',
+                fontFamily: 'DM Sans, sans-serif',
+                letterSpacing: '0.35em',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                backdropFilter: 'blur(16px)',
+                textDecoration: 'none',
+                display: 'inline-block',
+                overflow: 'hidden',
+                transition: 'all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)',
+              }}
+            >
+              <motion.div
+                initial={{ x: '-110%' }}
+                whileHover={{ x: '110%' }}
+                transition={{ duration: 0.9, ease: 'easeInOut' }}
+                style={{
+                  position: 'absolute',
+                  top: 0, left: 0, width: '100%', height: '100%',
+                  background: 'linear-gradient(90deg, transparent, rgba(232,213,163,0.18), transparent)',
+                  pointerEvents: 'none',
+                }}
+              />
+              <span style={{ position: 'relative', zIndex: 1 }}>Reservar</span>
+            </MotionLink>
+          </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          style={{
+            position: 'absolute',
+            bottom: '2.5rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}
+        >
+          <span style={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontSize: '0.55rem',
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: 'rgba(201,168,76,0.5)',
+          }}>Descubrir</span>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              width: '1px',
+              height: '30px',
+              background: 'linear-gradient(to bottom, rgba(201,168,76,0.5), transparent)',
+            }}
+          />
+        </motion.div>
+      </div>
     </section>
   );
 }
