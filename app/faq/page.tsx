@@ -21,7 +21,7 @@ export default function FaqPage() {
             {/* Back link */}
             <div style={{ marginBottom: '3rem' }}>
               <Link href="/" className="btn-back-gold">
-                <ArrowLeft size={16} /> Volver al inicio
+                <ChevronLeft size={16} /> Volver al inicio
               </Link>
             </div>
 
